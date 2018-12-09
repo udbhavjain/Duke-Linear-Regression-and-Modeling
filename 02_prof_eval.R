@@ -180,7 +180,7 @@ summary(m_full_1)
 # model selection using adjusted R-squared
 
 # copy dataset
-modldat <- data.frame(evals)
+modldat <- evals[,1:21]
 
 # Adjusted R-squared for full model
 Rsq <- summary(lm(score ~ ., data = modldat))$adj.r.squared
@@ -202,7 +202,7 @@ while(flag == TRUE)
   for(i in 2:ncol(modldat))
   {
       modl <- lm(score ~ ., data = modldat[,-i])
-      rvals[i-1,1] <- names(evals[,i])
+      rvals[i-1,1] <- names(modldat[,i])
       rvals[i-1,2] <- summary(modl)$adj.r.squared
   }
 
