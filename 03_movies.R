@@ -14,6 +14,11 @@ movies <- movies %>% select(title_type, genre, runtime, mpaa_rating,
                             best_pic_nom, best_pic_win, best_actor_win,
                             best_actress_win, best_dir_win, top200_box)
 
+" The data has been selected randomly from IMDB and Rotten Tomatoes.
+  As the average person does not have an account on these websites, it's hard to say how well the audience 
+  scores represent the general public opinion. The people who vote on these websites are more invested into movies 
+  than those who don't. "
+
 
 "------------------------------------------------------------------------------------------------------------"
 
