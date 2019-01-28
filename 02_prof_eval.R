@@ -15,27 +15,22 @@ evals %>% summarise(med_scr = median(score),
                     iqr_25 = quantile(score, 0.75),
                     u3 = sum(score < 3))
 
-x11()
 ggplot(data = evals, aes(x = score)) + geom_histogram(binwidth = 1)
 
 " FALSE: The left skewness of the data suggests that the students are less likely to rate the professors highly. "
 
 # relationship between age and outfit of professor in photo
-x11()
 ggplot(data = evals, aes(y = age,x = pic_outfit)) + geom_boxplot()
 
 " The older professors are in formal outfits in their photos, while the youngest ones are in non-formal. "
 
 # relationship between beauty rating and score
-x11()
 ggplot(data = evals, aes(x = bty_avg, y = score)) + geom_point()
 
 # plot with random variation
-x11()
 ggplot(data = evals, aes(x = bty_avg, y = score)) + geom_jitter()
 
 # fit a linear model
-x11()
 ggplot(data = evals, aes(x = bty_avg, y = score)) +
   geom_jitter() +
   geom_smooth(method = "lm", se = FALSE)
@@ -50,7 +45,6 @@ summary(lm_bty)
 # condition check for least squares line
 
 # linearity and constant variability
-x11()
 ggplot(data = lm_bty, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -62,7 +56,6 @@ ggplot(data = lm_bty, aes(x = .fitted, y = .resid)) +
 # normal distribution of residuals
 
 # histogram
-x11()
 ggplot(data = lm_bty, aes(x = .resid)) +
   geom_histogram(binwidth = 1) +
   xlab("Residuals")
@@ -70,7 +63,6 @@ ggplot(data = lm_bty, aes(x = .resid)) +
 " Slight left skew, but almost normal. "
 
 # normal probability plot
-x11()
 ggplot(data = lm_bty, aes(sample = .resid)) + stat_qq()
 " Mostly normal, but slighly skewed to the left at the end. "
 
@@ -78,7 +70,6 @@ ggplot(data = lm_bty, aes(sample = .resid)) + stat_qq()
   is large, so this may not be an important violation of conditions. "
 
 # plot beauty score ratings by each student
-x11()
 ggplot(data = evals, aes(x = bty_f1lower, y = bty_avg)) +
   geom_jitter()
 
@@ -87,7 +78,6 @@ evals %>%
   summarise(cor(bty_avg, bty_f1lower))
 
 # relationship between all beauty variables
-x11()
 ggpairs(evals, columns = 13:19)
 
 
@@ -98,7 +88,6 @@ summary(m_bty_gen)
 # check conditions for this model
 
 # linearity and constant variability
-x11()
 ggplot(data = m_bty_gen, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -110,13 +99,11 @@ ggplot(data = m_bty_gen, aes(x = .fitted, y = .resid)) +
 # normal distribution of residuals
 
 # histogram
-x11()
 ggplot(data = m_bty_gen, aes(x = .resid)) +
   geom_histogram(binwidth = 1) +
   xlab("Residuals")
 
 # normal probability plot
-x11()
 ggplot(data = m_bty_gen, aes(sample = .resid)) + stat_qq()
 
 " Slightly left skewed, but nearly normal. "
