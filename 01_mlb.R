@@ -9,7 +9,6 @@ data(mlb11)
 " A scatterplot would be used for showing the relationship between runs the other numerical variables. "
 
 #  relationship between runs and at_bats
-x11()
 ggplot(data = mlb11, aes(x = at_bats, y = runs)) + geom_point()
 
 " The relationship is linear. "
@@ -22,7 +21,6 @@ mlb11 %>%
   One of the potential outliers is a team with approximately 5520 at bats. "
 
 # interactive plot to check sum of squares
-x11()
 plot_ss(x = at_bats, y = runs, data = mlb11, showSquares = TRUE)
 
 " Lowest sum of squares was found to be 126557.4 through trial and error. "
@@ -38,7 +36,6 @@ summary(m1)
 "  For each additional home run, the model predicts 1.83 more runs, on average. "
 
 # scatterplot with m1 regression line
-x11()
 ggplot(data = mlb11, aes(x = at_bats, y = runs)) +
   geom_point() +
   stat_smooth(method = "lm", se = FALSE)
@@ -52,7 +49,6 @@ mlb11 %>%
 
 # check for linearity
 # residuals vs fitted values
-x11()
 ggplot(data = m1, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -64,13 +60,11 @@ ggplot(data = m1, aes(x = .fitted, y = .resid)) +
 # check for nearly normal residuals
 
 # histogram
-x11()
 ggplot(data = m1, aes(x = .resid)) +
   geom_histogram(binwidth = 25) +
   xlab("Residuals")
 
 # normal probability plot
-x11()
 ggplot(data = m1, aes(sample = .resid)) +
   stat_qq()
 
@@ -82,7 +76,6 @@ ggplot(data = m1, aes(sample = .resid)) +
 " Based on the residuals plot from earlier, the constant variability condition appears to be met. "
 
 # relationship between bating average and runs
-x11()
 ggplot(data = mlb11, aes(x = bat_avg, y = runs)) +
   geom_point()
 
@@ -138,7 +131,6 @@ cmp$type <- relevel(cmp$type, "new_onbase")
 cmp$type <- relevel(cmp$type, "new_slug")
 
 # visualise R-squared values
-x11()
 ggplot(data = cmp, aes(y = vals, x = type, fill = cat)) +
   geom_col()
 
