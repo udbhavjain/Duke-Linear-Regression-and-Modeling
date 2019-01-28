@@ -55,7 +55,6 @@ scoreCmp %>% summarise(mean = mean(audience_score), sd = sd(audience_score), med
                      pc25 = quantile(audience_score, 0.25), pc75 = quantile(audience_score, 0.75))
 
 # distribution plot
-x11()
 ggplot(data = scoreCmp, aes(x = audience_score)) + geom_histogram(binwidth = 10)
 
 " A bit left-skewed. "
@@ -65,7 +64,6 @@ scoreCmp %>% summarise(mean = mean(imdb_rating), sd = sd(imdb_rating), median = 
                        pc25 = quantile(imdb_rating, 0.25), pc75 = quantile(imdb_rating, 0.75))
 
 # distribution plot
-x11()
 ggplot(data = scoreCmp, aes(x = imdb_rating)) + geom_histogram(binwidth = 1)
 
 " More left-skewed than the RT audience scores. Less variability. "
@@ -75,7 +73,6 @@ scoreCmp %>% summarise(mean = mean(critics_score), sd = sd(critics_score), media
                        pc25 = quantile(critics_score, 0.25), pc75 = quantile(critics_score, 0.75))
 
 # distribution plot
-x11()
 ggplot(data = scoreCmp, aes(x = critics_score)) + geom_histogram(binwidth = 10)
 
 " Left-skewed, but a lot more evenly spread out than audience scores on RT and IMDB. "
@@ -84,7 +81,6 @@ ggplot(data = scoreCmp, aes(x = critics_score)) + geom_histogram(binwidth = 10)
 
 scoreCmp$imdb_rating <- scoreCmp$imdb_rating * 10 # change scale of imdb rating for comparison
 
-x11()
 ggplot(data = stack(scoreCmp), aes(x = ind, y = values)) + 
   geom_boxplot() +
   ylab("score") +
@@ -93,7 +89,6 @@ ggplot(data = stack(scoreCmp), aes(x = ind, y = values)) +
 scoreCmp$imdb_rating <- scoreCmp$imdb_rating / 10 
 
 # check correlation
-x11()
 ggpairs(data = scoreCmp)
 
 " Audience ratings on RT and IMDB are highly correlated. Slightly less correlation with RT critics score. "
@@ -107,7 +102,6 @@ cmpMdl_rt <- lm(audience_score ~ critics_score, data = scoreCmp)
 # condition check for least squares line
 
 # linearity and constant variability
-x11()
 ggplot(data = cmpMdl_rt, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -119,7 +113,6 @@ ggplot(data = cmpMdl_rt, aes(x = .fitted, y = .resid)) +
 # normal distribution of residuals
 
 # histogram
-x11()
 ggplot(data = cmpMdl_rt, aes(x = .resid)) +
   geom_histogram(binwidth = 1) +
   xlab("Residuals")
@@ -127,7 +120,6 @@ ggplot(data = cmpMdl_rt, aes(x = .resid)) +
 " Subtle right skew. "
 
 # normal probability plot
-x11()
 ggplot(data = cmpMdl_rt, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 
 " Slight distortion at the ends. "
@@ -135,7 +127,6 @@ ggplot(data = cmpMdl_rt, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 " The conditions appear to be satisfied. "
 
 # plot the least squares line over the points
-x11()
 ggplot(data = cmpMdl_rt, aes(x = critics_score, y = audience_score)) +
   geom_jitter() +
   geom_smooth(method = "lm")
@@ -156,7 +147,6 @@ cmpMdl_imdb <- lm(imdb_rating ~ critics_score, data = scoreCmp)
 # condition check for least squares line
 
 # linearity and constant variability
-x11()
 ggplot(data = cmpMdl_imdb, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -168,7 +158,6 @@ ggplot(data = cmpMdl_imdb, aes(x = .fitted, y = .resid)) +
 # normal distribution of residuals
 
 # histogram
-x11()
 ggplot(data = cmpMdl_imdb, aes(x = .resid)) +
   geom_histogram(binwidth = 1) +
   xlab("Residuals")
@@ -176,7 +165,6 @@ ggplot(data = cmpMdl_imdb, aes(x = .resid)) +
 " Subtle left skew. "
 
 # normal probability plot
-x11()
 ggplot(data = cmpMdl_imdb, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 
 " Mostly normal, but some distortion at the ends. "
@@ -184,7 +172,6 @@ ggplot(data = cmpMdl_imdb, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 " The conditions appear to be satisfied. "
 
 # plot the least squares line over the points
-x11()
 ggplot(data = cmpMdl_imdb, aes(x = critics_score, y = imdb_rating)) +
   geom_jitter() +
   geom_smooth(method = "lm")
@@ -244,7 +231,6 @@ movieParams %>%
   summarise(pc = n()*100/nrow(movieParams))
 
 # visualise distribution
-x11()
 ggplot(data = movieParams, aes(x = title_type, fill = title_type)) +
   geom_bar()
 
@@ -256,7 +242,6 @@ movieParams %>%
   summarise(pc = n()*100/nrow(movieParams))
 
 # visualise distribution
-x11()
 ggplot(data = movieParams, aes(x = genre, fill = genre)) +
   geom_bar()
 
@@ -268,7 +253,6 @@ movieParams %>%
   summarise(pc = n()*100/nrow(movieParams))
 
 # visualise distribution
-x11()
 ggplot(data = movieParams, aes(x = mpaa_rating, fill = mpaa_rating)) +
   geom_bar()
 
@@ -278,14 +262,12 @@ movieParams %>%
             median = median(runtime), pc25 = quantile(runtime, 0.25), pc75 = quantile(runtime, 0.75))
 
 # histogram of runtime distribution
-x11()
 ggplot(data = movieParams, aes(x = runtime)) +
   geom_histogram(binwidth = 10)
 
 " Right skewed distribution. "
 
 # boxplot of runtime
-x11()
 ggplot(data = movieParams, aes(y = runtime)) +
   geom_boxplot()
 
@@ -296,7 +278,6 @@ rating_mdl <- lm(audience_score ~ ., data = movieParams)
 # condition check for least squares line
 
 # linearity and constant variability
-x11()
 ggplot(data = rating_mdl, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -308,7 +289,6 @@ ggplot(data = rating_mdl, aes(x = .fitted, y = .resid)) +
 # normal distribution of residuals
 
 # histogram
-x11()
 ggplot(data = rating_mdl, aes(x = .resid)) +
   geom_histogram(binwidth = 1) +
   xlab("Residuals")
@@ -316,7 +296,6 @@ ggplot(data = rating_mdl, aes(x = .resid)) +
 " Left skew. "
 
 # normal probability plot
-x11()
 ggplot(data = rating_mdl, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 
 " Curved plot. "
@@ -327,22 +306,18 @@ ggplot(data = rating_mdl, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 summary(rating_mdl)
 " Adjusted R-squared value is 0.2223; Only 22.23% of the variability in the data is explained by the linear model. "
 
-x11()
 ggplot(movieParams, aes(x = runtime, y = audience_score)) +
   geom_jitter() +
   stat_smooth(method = "lm")
 
-x11()
 ggplot(movieParams, aes(x = runtime, y = audience_score, colour = title_type)) +
   geom_jitter() +
   stat_smooth(method = "lm", se = FALSE)
 
-x11()
 ggplot(movieParams, aes(x = runtime, y = audience_score, colour = mpaa_rating)) +
   geom_jitter() +
   stat_smooth(method = "lm", se = FALSE)
 
-x11()
 ggplot(movieParams, aes(x = runtime, y = audience_score, colour = genre)) +
   geom_jitter() +
   stat_smooth(method = "lm", se = FALSE)
